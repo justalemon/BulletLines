@@ -17,7 +17,8 @@ namespace BulletLines
 
         private void BulletLines_Tick(object sender, EventArgs e)
         {
-
+            // Disable the on screen reticle
+            UI.HideHudComponentThisFrame(HudComponent.Reticle);
         }
     }
 }
