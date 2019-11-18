@@ -13,11 +13,15 @@ namespace BulletLines
     public class BulletLines : Script
     {
         private Color LineColor = Color.Red;
+        private Ped[] WorldPeds = new Ped[0];
+        private int NextUpdate = 0;
 
         public BulletLines()
         {
             // Add all of our events
             Tick += BulletLines_Tick;
+            // Set the next time wher we should update the mod
+            NextUpdate = Game.GameTime + 1000;
         }
 
         private void BulletLines_Tick(object sender, EventArgs e)
@@ -25,24 +29,57 @@ namespace BulletLines
             // Disable the on screen reticle
             UI.HideHudComponentThisFrame(HudComponent.Reticle);
 
-            // Try to get the weapon of the player
-            Entity playerWeapon = Function.Call<Entity>(Hash.GET_CURRENT_PED_WEAPON_ENTITY_INDEX, Game.Player.Character);
-
-            // If the player is aiming and the weapon exists
-            if (Game.Player.IsAiming && playerWeapon != null)
+            // If the next update time is higher or equal than the current time
+            if (Game.GameTime >= NextUpdate)
             {
-                // Try to get where the weapon is aiming at
-                RaycastResult result = World.GetCrosshairCoordinates();
-                // If the weapon is aiming at nowhere, return
-                if (!result.DitHitAnything)
+                WorldPeds = World.GetAllPeds();
+                NextUpdate = Game.GameTime + 1000;
+            }
+
+            // For every ped in the world
+            foreach (Ped ped in WorldPeds)
+            {
+                // Try to get the weapon of the entity
+                Entity weapon = Function.Call<Entity>(Hash.GET_CURRENT_PED_WEAPON_ENTITY_INDEX, ped);
+
+                // If the weapon doesn't exists, continue to the next iteration
+                if (weapon == null)
                 {
-                    return;
+                    continue;
                 }
-                // Get the origin and destination of the line
-                Vector3 origin = playerWeapon.Position;
-                Vector3 destination = result.HitCoords;
-                // And draw a line between those points
+
+                // Save the origin and destination for our positions
+                Vector3 origin = weapon.Position;
+                Vector3 destination;
+
+                // If the ped is the player and is aiming, shooting or pressing the fire button
+                if (ped.IsPlayer && (Game.Player.IsAiming || Game.Player.Character.IsShooting || Game.IsControlPressed(0, Control.Attack)))
+                {
+                    // Try to get where the weapon is aiming at
+                    RaycastResult result = World.GetCrosshairCoordinates();
+                    // If the weapon is aiming at nowhere, continue
+                    if (!result.DitHitAnything)
+                    {
+                        continue;
+                    }
+                    // If is being aimed at something, 
+                    destination = result.HitCoords;
+                }
+                // Otherwise
+                else
+                {
+                    // If the ped is not targeting the player, continue
+                    if (!ped.IsInCombatAgainst(Game.Player.Character))
+                    {
+                        continue;
+                    }
+                    // Otherwise, set the player head as the destination
+                    destination = Game.Player.Character.GetBoneCoord(Bone.SKEL_Head);
+                }
+
+                // Finally, draw a line between those points and a dot at the end of it
                 Function.Call(Hash.DRAW_LINE, origin.X, origin.Y, origin.Z, destination.X, destination.Y, destination.Z, LineColor.R, LineColor.G, LineColor.B, LineColor.A);
+                World.DrawMarker(MarkerType.DebugSphere, destination, Vector3.Zero, Vector3.Zero, new Vector3(0.017f, 0.017f, 0.017f), LineColor);
             }
         }
     }
