@@ -1,4 +1,4 @@
-﻿using GTA;
+using GTA;
 using GTA.Math;
 using GTA.Native;
 using System;
@@ -68,8 +68,18 @@ namespace BulletLines
                 // Otherwise if the ped is in combat against the player and has a weapon
                 else if (ped.IsInCombatAgainst(Game.Player.Character) && ped.Weapons.Current.Hash != WeaponHash.Unarmed)
                 {
-                    // Otherwise, set the player head as the destination
-                    destination = Game.Player.Character.GetBoneCoord(Bone.SKEL_Head);
+                    // Calculate the offset of the weapon
+                    Vector3 offset = weapon.GetOffsetInWorldCoords(new Vector3(Game.Player.Character.Position.DistanceTo(weapon.Position) + 15, 0, 0));
+
+                    // Calculate an approximate raycast from the weapon to the destination
+                    RaycastResult result = World.Raycast(weapon.Position, offset, IntersectOptions.Map | IntersectOptions.Mission_Entities | IntersectOptions.Objects | IntersectOptions.Peds1);
+                    // If the weapon is aiming at nowhere, continue
+                    if (!result.DitHitAnything)
+                    {
+                        continue;
+                    }
+                    // Otherwise, save the destination
+                    destination = result.HitCoords;
                 }
                 // If we got here, continue to the next iteration
                 else
