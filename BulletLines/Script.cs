@@ -48,44 +48,41 @@ namespace BulletLines
                     continue;
                 }
 
-                // Save the origin and destination for our positions
-                Vector3 origin = weapon.Position;
-                Vector3 destination;
-
-                // If the ped is the player and is aiming, shooting or pressing the fire button
-                if (ped.IsPlayer && (Game.Player.IsAiming || Game.Player.Character.IsShooting || Game.IsControlPressed(0, Control.Attack)))
-                {
-                    // Try to get where the weapon is aiming at
-                    RaycastResult result = World.GetCrosshairCoordinates();
-                    // If the weapon is aiming at nowhere, continue
-                    if (!result.DitHitAnything)
-                    {
-                        continue;
-                    }
-                    // If is being aimed at something, 
-                    destination = result.HitCoords;
-                }
-                // Otherwise if the ped is in combat against the player and has a weapon
-                else if (ped.IsInCombatAgainst(Game.Player.Character) && ped.Weapons.Current.Hash != WeaponHash.Unarmed)
-                {
-                    // Calculate the offset of the weapon
-                    Vector3 offset = weapon.GetOffsetInWorldCoords(new Vector3(Game.Player.Character.Position.DistanceTo(weapon.Position) + 15, 0, 0));
-
-                    // Calculate an approximate raycast from the weapon to the destination
-                    RaycastResult result = World.Raycast(weapon.Position, offset, IntersectOptions.Map | IntersectOptions.Mission_Entities | IntersectOptions.Objects | IntersectOptions.Peds1);
-                    // If the weapon is aiming at nowhere, continue
-                    if (!result.DitHitAnything)
-                    {
-                        continue;
-                    }
-                    // Otherwise, save the destination
-                    destination = result.HitCoords;
-                }
-                // If we got here, continue to the next iteration
-                else
+                // If this is a player ped and is not aiming, shooting or attacking, continue
+                if (ped.IsPlayer && (!Game.Player.IsAiming && !ped.IsShooting && !Game.IsControlPressed(0, Control.Attack)))
                 {
                     continue;
                 }
+                
+                // If the ped is not doing any of the tasks that we need
+                if (!Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 4) &&    // CTaskAimGunOnFoot
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 12) &&   // CTaskAimGun
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 56) &&   // CTaskSwapWeapon
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 295) &&  // CTaskAimGunVehicleDriveBy
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 298) &&  // CTaskReloadGun
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 304) &&  // CTaskAimGunBlindFire
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 355) &&  // CTaskShootAtTarget
+                    !Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 368))    // CTaskShootOutTire
+                {
+                    continue;
+                }
+
+                // Get the location of the muzzle
+                int index = weapon.GetBoneIndex("gun_muzzle");
+                Vector3 origin = weapon.GetBoneCoord(index);
+
+                // Calculate the offset of the weapon
+                Vector3 offset = weapon.GetOffsetInWorldCoords(new Vector3(2500, 0, 0));
+
+                // Calculate an approximate raycast from the weapon to the destination
+                RaycastResult result = World.Raycast(origin, offset, IntersectOptions.Map | IntersectOptions.Mission_Entities | IntersectOptions.Objects | IntersectOptions.Peds1);
+                // If the weapon is aiming at nowhere, continue
+                if (!result.DitHitAnything)
+                {
+                    continue;
+                }
+                // Otherwise, save the destination
+                Vector3 destination = result.HitCoords;
 
                 // Finally, draw a line between those points and a dot at the end of it
                 Function.Call(Hash.DRAW_LINE, origin.X, origin.Y, origin.Z, destination.X, destination.Y, destination.Z, LineColor.R, LineColor.G, LineColor.B, LineColor.A);
