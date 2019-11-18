@@ -65,16 +65,16 @@ namespace BulletLines
                     // If is being aimed at something, 
                     destination = result.HitCoords;
                 }
-                // Otherwise
-                else
+                // Otherwise if the ped is in combat against the player and has a weapon
+                else if (ped.IsInCombatAgainst(Game.Player.Character) && ped.Weapons.Current.Hash != WeaponHash.Unarmed)
                 {
-                    // If the ped is not targeting the player, continue
-                    if (!ped.IsInCombatAgainst(Game.Player.Character))
-                    {
-                        continue;
-                    }
                     // Otherwise, set the player head as the destination
                     destination = Game.Player.Character.GetBoneCoord(Bone.SKEL_Head);
+                }
+                // If we got here, continue to the next iteration
+                else
+                {
+                    continue;
                 }
 
                 // Finally, draw a line between those points and a dot at the end of it
