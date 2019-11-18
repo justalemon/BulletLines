@@ -76,13 +76,8 @@ namespace BulletLines
 
                 // Calculate an approximate raycast from the weapon to the destination
                 RaycastResult result = World.Raycast(origin, offset, IntersectOptions.Map | IntersectOptions.Mission_Entities | IntersectOptions.Objects | IntersectOptions.Peds1);
-                // If the weapon is aiming at nowhere, continue
-                if (!result.DitHitAnything)
-                {
-                    continue;
-                }
-                // Otherwise, save the destination
-                Vector3 destination = result.HitCoords;
+                // And set the destination to the raycast coordinates (if it did hit something) or the approximate end of the line
+                Vector3 destination = result.DitHitAnything ? result.HitCoords : offset;
 
                 // Finally, draw a line between those points and a dot at the end of it
                 Function.Call(Hash.DRAW_LINE, origin.X, origin.Y, origin.Z, destination.X, destination.Y, destination.Z, LineColor.R, LineColor.G, LineColor.B, LineColor.A);
