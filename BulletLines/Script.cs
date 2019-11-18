@@ -11,6 +11,12 @@ namespace BulletLines
     {
         public BulletLines()
         {
+            // Add all of our events
+            Tick += BulletLines_Tick;
+        }
+
+        private void BulletLines_Tick(object sender, EventArgs e)
+        {
 
         }
     }
