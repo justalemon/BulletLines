@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29503.13
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletLinesV", "BulletLinesV\BulletLinesV.csproj", "{F963EA44-2522-451D-9086-58DF8E353FD5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BulletLines", "BulletLines\BulletLines.csproj", "{F963EA44-2522-451D-9086-58DF8E353FD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
