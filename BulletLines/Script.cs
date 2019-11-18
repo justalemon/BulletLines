@@ -40,7 +40,7 @@ namespace BulletLines
             foreach (Ped ped in WorldPeds)
             {
                 // Try to get the weapon of the entity
-                Entity weapon = Function.Call<Entity>(Hash.GET_CURRENT_PED_WEAPON_ENTITY_INDEX, ped);
+                Entity weapon = ped.Weapons.CurrentWeaponObject;
 
                 // If the weapon doesn't exists, continue to the next iteration
                 if (weapon == null)
