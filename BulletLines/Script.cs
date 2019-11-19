@@ -28,8 +28,11 @@ namespace BulletLines
 
         private void BulletLines_Tick(object sender, EventArgs e)
         {
-            // Disable the on screen reticle
-            UI.HideHudComponentThisFrame(HudComponent.Reticle);
+            // If the user wants to disable the on screen reticle and the current weapon is not a sniper, do it
+            if (Config.DisableReticle && Game.Player.Character.Weapons.Current.Group != WeaponGroup.Sniper)
+            {
+                UI.HideHudComponentThisFrame(HudComponent.Reticle);
+            }
 
             // If the next update time is higher or equal than the current time or is zero
             if (Game.GameTime >= NextUpdate || NextUpdate == 0)
@@ -81,9 +84,16 @@ namespace BulletLines
                 // And set the destination to the raycast coordinates (if it did hit something) or the approximate end of the line
                 Vector3 destination = result.DitHitAnything ? result.HitCoords : offset;
 
-                // Finally, draw a line between those points and a dot at the end of it
-                Function.Call(Hash.DRAW_LINE, origin.X, origin.Y, origin.Z, destination.X, destination.Y, destination.Z, LineColor.R, LineColor.G, LineColor.B, LineColor.A);
-                World.DrawMarker(MarkerType.DebugSphere, destination, Vector3.Zero, Vector3.Zero, new Vector3(0.017f, 0.017f, 0.017f), LineColor);
+                // If the user wants the bullet line, draw a line between those points
+                if (Config.BulletLine)
+                {
+                    Function.Call(Hash.DRAW_LINE, origin.X, origin.Y, origin.Z, destination.X, destination.Y, destination.Z, LineColor.R, LineColor.G, LineColor.B, LineColor.A);
+                }
+                // If the user wants the end of the bullet line to be shown, draw a sphere
+                if (Config.BulletLineEnd)
+                {
+                    World.DrawMarker(MarkerType.DebugSphere, destination, Vector3.Zero, Vector3.Zero, new Vector3(0.017f, 0.017f, 0.017f), LineColor);
+                }
             }
         }
     }
