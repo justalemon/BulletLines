@@ -75,7 +75,7 @@ namespace BulletLines
                 Vector3 offset = weapon.GetOffsetInWorldCoords(new Vector3(2500, 0, 0));
 
                 // Calculate an approximate raycast from the weapon to the destination
-                RaycastResult result = World.Raycast(origin, offset, IntersectOptions.Map | IntersectOptions.Mission_Entities | IntersectOptions.Objects | IntersectOptions.Peds1);
+                RaycastResult result = ped.IsPlayer ? World.GetCrosshairCoordinates() : World.Raycast(origin, offset, IntersectOptions.Map | IntersectOptions.Mission_Entities | IntersectOptions.Objects | IntersectOptions.Peds1);
                 // And set the destination to the raycast coordinates (if it did hit something) or the approximate end of the line
                 Vector3 destination = result.DitHitAnything ? result.HitCoords : offset;
 
