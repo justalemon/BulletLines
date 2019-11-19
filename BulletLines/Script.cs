@@ -1,3 +1,4 @@
+using BulletLines.Config;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -12,8 +13,9 @@ namespace BulletLines
 {
     public class BulletLines : Script
     {
-        private Color LineColor = Color.Red;
-        private Ped[] WorldPeds = new Ped[0];
+        private static readonly Configuration Config = Configuration.Load();
+        private static readonly Color LineColor = Color.FromArgb(Config.ColorA, Config.ColorR, Config.ColorG, Config.ColorB);
+        private static Ped[] WorldPeds = new Ped[0];
         private int NextUpdate = 0;
 
         public BulletLines()
@@ -29,8 +31,8 @@ namespace BulletLines
             // Disable the on screen reticle
             UI.HideHudComponentThisFrame(HudComponent.Reticle);
 
-            // If the next update time is higher or equal than the current time
-            if (Game.GameTime >= NextUpdate)
+            // If the next update time is higher or equal than the current time or is zero
+            if (Game.GameTime >= NextUpdate || NextUpdate == 0)
             {
                 WorldPeds = World.GetAllPeds();
                 NextUpdate = Game.GameTime + 1000;
