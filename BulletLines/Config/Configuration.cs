@@ -54,6 +54,11 @@ namespace BulletLines.Config
         /// </summary>
         [JsonProperty("disable_reticle")]
         public bool DisableReticle { get; set; } = true;
+        /// <summary>
+        /// The time between the update of peds.
+        /// </summary>
+        [JsonProperty("update_time")]
+        public int UpdateTime { get; set; } = 1000;
 
         private static string GetConfigLocation()
         {

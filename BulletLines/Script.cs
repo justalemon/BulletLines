@@ -79,7 +79,7 @@ namespace BulletLines
             if (Game.GameTime >= NextUpdate || NextUpdate == 0)
             {
                 WorldPeds = World.GetAllPeds();
-                NextUpdate = Game.GameTime + 1000;
+                NextUpdate = Game.GameTime + Config.UpdateTime;
             }
 
             // For every ped in the world
