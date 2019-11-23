@@ -16,7 +16,7 @@ namespace BulletLines
         /// <summary>
         /// The mod configuration.
         /// </summary>
-        private static readonly Configuration Config = Configuration.Load();
+        internal static readonly Configuration Config = Configuration.Load();
         /// <summary>
         /// The color of the bullet line and the end of it.
         /// </summary>
