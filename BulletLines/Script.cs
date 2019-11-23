@@ -18,7 +18,7 @@ namespace BulletLines
         private static Ped[] WorldPeds = new Ped[0];
         private int NextUpdate = 0;
 
-        private static bool IsPlayerAimingOrShooting
+        private static bool IsPlayerFingerOnTrigger
         {
             get
             {
@@ -79,7 +79,7 @@ namespace BulletLines
                 }
 
                 // If this is a player ped and is not aiming or shooting, continue
-                if (ped.IsPlayer && !IsPlayerAimingOrShooting)
+                if (ped.IsPlayer && !IsPlayerFingerOnTrigger)
                 {
                     continue;
                 }
