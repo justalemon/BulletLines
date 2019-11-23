@@ -32,6 +32,16 @@ namespace BulletLines
                 return hash != WeaponHash.Unarmed && (aimValue > 0 || attackValue > 0);
             }
         }
+        private static bool IsPlayerUsingSniperSights
+        {
+            get
+            {
+                // Get the type or group of weapon that the player is using
+                WeaponGroup group = Game.Player.Character.Weapons.Current.Group;
+                // And check if is a sniper and is aiming
+                return group == WeaponGroup.Sniper && Game.GetControlNormal(0, Control.Aim) > 0;
+            }
+        }
 
         public BulletLines()
         {
@@ -43,8 +53,8 @@ namespace BulletLines
 
         private void BulletLines_Tick(object sender, EventArgs e)
         {
-            // If the user wants to disable the on screen reticle and the current weapon is not a sniper, do it
-            if (Config.DisableReticle && Game.Player.Character.Weapons.Current.Group != WeaponGroup.Sniper)
+            // If the user wants to disable the on screen reticle and the current weapon is not a sniper being aimed, do it
+            if (Config.DisableReticle && !IsPlayerUsingSniperSights)
             {
                 UI.HideHudComponentThisFrame(HudComponent.Reticle);
             }
