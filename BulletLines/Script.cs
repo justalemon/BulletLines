@@ -108,8 +108,8 @@ namespace BulletLines
                     continue;
                 }
 
-                // If this is a player ped and is not aiming or shooting, continue
-                if (ped.IsPlayer && !IsPlayerFingerOnTrigger)
+                // If this is a player ped, is not aiming or shooting and the configuration menu is closed, continue
+                if (ped.IsPlayer && !IsPlayerFingerOnTrigger && !Pool.Menu.Visible)
                 {
                     continue;
                 }
