@@ -77,6 +77,12 @@ namespace BulletLines
             // Draw the menu pool contents
             Pool.ProcessMenus();
 
+            // Because the SHVDN console is broken, use the cheat input field for toggling the menu
+            if (Function.Call<bool>(Hash._0x557E43C447E700A8, Game.GenerateHash("bulletlines")))
+            {
+                Pool.Menu.Visible = !Pool.Menu.Visible;
+            }
+
             // If the user wants to disable the on screen reticle and the current weapon is not a sniper being aimed, do it
             if (Config.DisableReticle && !IsPlayerUsingSniperSights)
             {
