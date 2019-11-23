@@ -20,7 +20,7 @@ namespace BulletLines
         /// <summary>
         /// The color of the bullet line and the end of it.
         /// </summary>
-        private static readonly Color LineColor = Color.FromArgb(Config.ColorA, Config.ColorR, Config.ColorG, Config.ColorB);
+        private static Color LineColor => Color.FromArgb(Config.ColorA, Config.ColorR, Config.ColorG, Config.ColorB);
         /// <summary>
         /// THe list of peds available in the game world.
         /// </summary>
