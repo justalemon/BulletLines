@@ -18,6 +18,21 @@ namespace BulletLines
         private static Ped[] WorldPeds = new Ped[0];
         private int NextUpdate = 0;
 
+        private static bool IsPlayerAimingOrShooting
+        {
+            get
+            {
+                // Get the hash of the weapon
+                WeaponHash hash = Game.Player.Character.Weapons.Current.Hash;
+                // And get the values for the Aim and Attack controls (L2/LT and R2/RT respectively)
+                float aimValue = Game.GetControlNormal(0, Control.Aim);
+                float attackValue = Game.GetControlNormal(0, Control.Attack);
+
+                // Finally, check that the player is not unarmed and either the Aim or Attack values are over zero
+                return hash != WeaponHash.Unarmed && (aimValue > 0 || attackValue > 0);
+            }
+        }
+
         public BulletLines()
         {
             // Add all of our events
@@ -53,8 +68,8 @@ namespace BulletLines
                     continue;
                 }
 
-                // If this is a player ped and is not aiming, shooting or attacking, continue
-                if (ped.IsPlayer && (!Game.Player.IsAiming && !ped.IsShooting && !Game.IsControlPressed(0, Control.Attack)))
+                // If this is a player ped and is not aiming or shooting, continue
+                if (ped.IsPlayer && !IsPlayerAimingOrShooting)
                 {
                     continue;
                 }
