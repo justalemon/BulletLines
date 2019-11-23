@@ -1,4 +1,5 @@
 using BulletLines.Config;
+using BulletLines.Menus;
 using GTA;
 using GTA.Math;
 using GTA.Native;
@@ -29,6 +30,10 @@ namespace BulletLines
         /// The time where the next set of peds should be fetched.
         /// </summary>
         private static int NextUpdate = 0;
+        /// <summary>
+        /// The NativeUI pool of menus.
+        /// </summary>
+        private static readonly MainPool Pool = new MainPool();
 
         /// <summary>
         /// If the player has a finger on the gun trigger (aka on the analog or digital controller trigger or mouse button).
@@ -69,6 +74,9 @@ namespace BulletLines
 
         private void BulletLines_Tick(object sender, EventArgs e)
         {
+            // Draw the menu pool contents
+            Pool.ProcessMenus();
+
             // If the user wants to disable the on screen reticle and the current weapon is not a sniper being aimed, do it
             if (Config.DisableReticle && !IsPlayerUsingSniperSights)
             {
