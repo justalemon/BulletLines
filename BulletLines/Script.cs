@@ -47,8 +47,6 @@ namespace BulletLines
         {
             // Add all of our events
             Tick += BulletLines_Tick;
-            // Set the next time wher we should update the mod
-            NextUpdate = Game.GameTime + 1000;
         }
 
         private void BulletLines_Tick(object sender, EventArgs e)
