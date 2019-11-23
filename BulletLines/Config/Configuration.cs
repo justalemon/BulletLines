@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -44,6 +44,11 @@ namespace BulletLines.Config
         /// </summary>
         [JsonProperty("bullet_line_end")]
         public bool BulletLineEnd { get; set; } = false;
+        /// <summary>
+        /// If the bullet line should be shown when using the sniper sights.
+        /// </summary>
+        [JsonProperty("line_on_sniper")]
+        public bool LineOnSniper { get; set; } = false;
         /// <summary>
         /// If the weapon reticle should be disabled when the manual aim is not being used with a sniper.
         /// </summary>

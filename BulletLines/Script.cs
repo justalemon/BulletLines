@@ -99,6 +99,12 @@ namespace BulletLines
                 {
                     continue;
                 }
+
+                // If this is a player ped, is using the sniper sights and the related option is disabled, continue
+                if (ped.IsPlayer && IsPlayerUsingSniperSights && !Config.LineOnSniper)
+                {
+                    continue;
+                }
                 
                 // If the ped is not doing any of the tasks that we need
                 if (!Function.Call<bool>(Hash.GET_IS_TASK_ACTIVE, ped, 4) &&    // CTaskAimGunOnFoot
