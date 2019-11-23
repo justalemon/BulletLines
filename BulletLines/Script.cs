@@ -16,7 +16,7 @@ namespace BulletLines
         private static readonly Configuration Config = Configuration.Load();
         private static readonly Color LineColor = Color.FromArgb(Config.ColorA, Config.ColorR, Config.ColorG, Config.ColorB);
         private static Ped[] WorldPeds = new Ped[0];
-        private int NextUpdate = 0;
+        private static int NextUpdate = 0;
 
         private static bool IsPlayerFingerOnTrigger
         {
