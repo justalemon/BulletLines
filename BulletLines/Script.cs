@@ -13,11 +13,26 @@ namespace BulletLines
 {
     public class BulletLines : Script
     {
+        /// <summary>
+        /// The mod configuration.
+        /// </summary>
         private static readonly Configuration Config = Configuration.Load();
+        /// <summary>
+        /// The color of the bullet line and the end of it.
+        /// </summary>
         private static readonly Color LineColor = Color.FromArgb(Config.ColorA, Config.ColorR, Config.ColorG, Config.ColorB);
+        /// <summary>
+        /// THe list of peds available in the game world.
+        /// </summary>
         private static Ped[] WorldPeds = new Ped[0];
+        /// <summary>
+        /// The time where the next set of peds should be fetched.
+        /// </summary>
         private static int NextUpdate = 0;
 
+        /// <summary>
+        /// If the player has a finger on the gun trigger (aka on the analog or digital controller trigger or mouse button).
+        /// </summary>
         private static bool IsPlayerFingerOnTrigger
         {
             get
@@ -32,6 +47,9 @@ namespace BulletLines
                 return hash != WeaponHash.Unarmed && (aimValue > 0 || attackValue > 0);
             }
         }
+        /// <summary>
+        /// If the player is using the sniper sight while aiming the weapon.
+        /// </summary>
         private static bool IsPlayerUsingSniperSights
         {
             get
