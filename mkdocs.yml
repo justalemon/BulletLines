@@ -5,8 +5,8 @@ nav:
   - Getting started: getting-started.md
   - Software License: license.md
 
-repo_name: FullDiveCollective/BulletLines
-repo_url: https://github.com/FullDiveCollective/BulletLines
+repo_name: justalemon/BulletLines
+repo_url: https://github.com/justalemon/BulletLines
 
 markdown_extensions:
   - markdown.extensions.admonition
