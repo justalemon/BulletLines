@@ -10,9 +10,9 @@ BulletLines is a little Grand Theft Auto V mod that implements the Bullet Predic
 
 [5mods-img]: https://img.shields.io/badge/5mods-download-20BA4E.svg
 [5mods-url]: https://www.gta5-mods.com/scripts/bulletlines
-[appveyor-img]: https://img.shields.io/appveyor/ci/fulldivecollective/bulletlines.svg?label=appveyor
-[appveyor-url]: https://ci.appveyor.com/project/fulldivecollective/bulletlines
-[codefactor-img]: https://www.codefactor.io/repository/github/fulldivecollective/bulletlines/badge
-[codefactor-url]: https://www.codefactor.io/repository/github/fulldivecollective/bulletlines
+[appveyor-img]: https://img.shields.io/appveyor/ci/justalemon/bulletlines.svg?label=appveyor
+[appveyor-url]: https://ci.appveyor.com/project/justalemon/bulletlines
+[codefactor-img]: https://www.codefactor.io/repository/github/justalemon/bulletlines/badge
+[codefactor-url]: https://www.codefactor.io/repository/github/justalemon/bulletlines
 [discord-img]: https://img.shields.io/badge/discord-join-7289DA.svg
 [discord-url]: https://discord.gg/Cf6sspj
