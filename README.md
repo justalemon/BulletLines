@@ -2,7 +2,7 @@
 
 [![5mods][5mods-img]][5mods-url] [![Documentation][docs-img]][docs-url] [![AppVeyor][appveyor-img]][appveyor-url] [![CodeFactor][codefactor-img]][codefactor-url] [![Discord][discord-img]][discord-url]
 
-BulletLines is a little Grand Theft Auto V mod that implements the Bullet Prediction Lines from Gun Gale Online in the Sword Art Online Anime.
+BulletLines is a mod for Grand Theft Auto V that allows you to use the [Trajectory Prediction Lines](https://swordartonline.fandom.com/wiki/Bullet_Line) (also called Bullet Lines) from Gun Gale Online. Is implemented in a way that every single ped in the game world can use it, so you can know at all times who is aiming at you.
 
 <div align="center">
     <img src="preview.png"/>
