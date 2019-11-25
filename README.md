@@ -1,4 +1,4 @@
-# BulletLines <small>for Grand Theft Auto V</small>
+# BulletLines <small>for GTA V</small>
 
 [![5mods][5mods-img]][5mods-url] [![Documentation][docs-img]][docs-url] [![AppVeyor][appveyor-img]][appveyor-url] [![CodeFactor][codefactor-img]][codefactor-url] [![Discord][discord-img]][discord-url]
 
